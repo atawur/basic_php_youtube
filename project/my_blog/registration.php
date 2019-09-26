@@ -7,7 +7,7 @@
 <form action="./registration_save.php"  method="post">
 <div class="form-group">
     <label for="first_name">First name</label>
-    <input type="text" class="form-control" id="first_name" name='first_name'>
+    <input type="text" class="form-control" id="first_name" name='fname'>
   </div>
   <div class="form-group">
     <label for="first_name">Middle name</label>
