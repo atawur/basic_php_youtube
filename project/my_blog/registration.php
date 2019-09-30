@@ -1,44 +1,76 @@
 <?php
     require_once("./header.php");
     include('./db/db_connect.php');
+    include ('./functions.php');
     
     $frst_name_err = '';
     $last_name_err = '';
-    $middle_name ='';
+    $middle_name_err ='';
     $email_err = '';
     $mobile_number_err = '';
     $password_err='';
     $confir_pasword_err= '';
 
+    $submit = true;
 if(isset($_POST['save'])){
   extract($_POST);
+  // if you are not using extract function
+  $fname = check_data($_POST['fname']);
+  $middle_name = check_data($_POST['middle_name']);
+  $last_name = check_data($_POST['last_name']);
+/// if you are using extract function
+  $email = check_data($email);
+  $password = check_data($password);
+  $confirm_password = check_data($confirm_password);
+  $mobile_number = check_data($mobile_number);
+
   if(!$fname){
     $frst_name_err = 'First  Required';
+    $submit = false;
   }
 
   if(!$middle_name){
-    $middle_name ='Moiddle anem required';
+    $middle_name_err ='Moiddle anem required';
+    $submit = false;
   }
 
   if(!$last_name){
     $last_name_err = 'Last _name required';
+    $submit = false;
   }
 
   if(!$email){
     $email_err = 'Email is requierd';
+    $submit = false;
   }
-
+if($email && !filter_var($email,FILTER_VALIDATE_EMAIL)){
+    $email_err = 'Please provide an valid email';
+    $submit = false;
+  
+}
   if(!$mobile_number){
     $mobile_number_err = 'Mobile NUmber is requiere';
+    $submit = false;
   }
 
-  if($password){
+  if(!$password){
     $password_err='Paswword required';
+    $submit = false;
   }
-  if($confirm_password){
+  if($password && (strlen($password)<8) ){
+      $password_err='Password Must be getter eigth character';
+      $submit = false;
+     
+  }
+  if(!$confirm_password){
     $confir_pasword_err= 'Confirm password is required';
+    $submit = false;
   }
-if($fname && $middle_name && $last_name && $email && $mobile_number && $password && $confirm_password ){
+  if(($password && $confirm_password) && ($password !== $confirm_password)){
+      $confir_pasword_err= 'Password and confirm password must be equal';
+      $submit = false;
+  }
+if($submit ){
   $sql = "insert into users(first_name,middle_name,last_name,email,password,mobile_number) values('$fname','$middle_name','$last_name','$email','$password','$mobile_number')";
   $rs = mysqli_query($conn,$sql);
   if($rs){
@@ -64,7 +96,7 @@ if($fname && $middle_name && $last_name && $email && $mobile_number && $password
   <div class="form-group">
     <label for="first_name">Middle name</label>
     <input type="text" class="form-control" id="middle_name"   name="middle_name">
-    <span style='color:red'><?php echo $middle_name; ?></span>
+    <span style='color:red'><?php echo $middle_name_err; ?></span>
   </div>
   <div class="form-group">
     <label for="last_name">last name</label>
@@ -78,13 +110,13 @@ if($fname && $middle_name && $last_name && $email && $mobile_number && $password
   </div>
   <div class="form-group">
     <label for="email">Email address:</label>
-    <input type="email" class="form-control" id="email"  name='email'>
+    <input type="text" class="form-control" id="email"  name='email'>
     <span style='color:red'><?php echo $email_err; ?></span>
   </div>
   <div class="form-group">
     <label for="pwd">Password:</label>
     <input type="password" class="form-control" id="pwd"  name="password">
-    <span style='color:red'><?php echo $frst_name_err; ?></span>
+    <span style='color:red'><?php echo $password_err; ?></span>
   </div>
   <div class="form-group">
     <label for="confirm_password">Confirm Password:</label>
