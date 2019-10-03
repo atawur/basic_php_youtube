@@ -19,7 +19,7 @@ if(isset($_POST['save'])){
   $middle_name = check_data($_POST['middle_name']);
   $last_name = check_data($_POST['last_name']);
 /// if you are using extract function
-  $email = check_data($email);
+  
   $password = check_data($password);
   $confirm_password = check_data($confirm_password);
   $mobile_number = check_data($mobile_number);
@@ -42,11 +42,16 @@ if(isset($_POST['save'])){
   if(!$email){
     $email_err = 'Email is requierd';
     $submit = false;
-  }
-if($email && !filter_var($email,FILTER_VALIDATE_EMAIL)){
+  } else if($email && !filter_var($email,FILTER_VALIDATE_EMAIL)){
     $email_err = 'Please provide an valid email';
     $submit = false;
-  
+} else if($email && filter_var($email,FILTER_VALIDATE_EMAIL)){
+  $is_exist = check_email($email);
+
+  if( $is_exist){
+    $email_err = 'This email addres salready exist ,please try another one';
+    $submit = false;
+  }
 }
   if(!$mobile_number){
     $mobile_number_err = 'Mobile NUmber is requiere';
@@ -70,6 +75,7 @@ if($email && !filter_var($email,FILTER_VALIDATE_EMAIL)){
       $confir_pasword_err= 'Password and confirm password must be equal';
       $submit = false;
   }
+
 if($submit ){
   $sql = "insert into users(first_name,middle_name,last_name,email,password,mobile_number) values('$fname','$middle_name','$last_name','$email','$password','$mobile_number')";
   $rs = mysqli_query($conn,$sql);
