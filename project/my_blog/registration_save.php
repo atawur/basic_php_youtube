@@ -1,19 +1,24 @@
 <?php
- include('./db/db_connect.php');
- //echo "<pre>";
- //print_r($_POST);
- extract($_POST);
- //echo $middle_name;
+include('./db/db_connect.php');
+include ('./functions.php');
+$password_err='';
+$email_err = '';
+if(isset($_POST['login'])){
+    extract($_POST);
+    $submit = true;
+    if(!$password){
+        $password_err='Please enter Your Password';
+        $submit = false;
+    }
 
- $sql = "insert into users(first_name,middle_name,last_name,email,password,mobile_number) values('$fname','$middle_name','$last_name','$email','$password','$mobile_number')";
-///echo $sql;
+    if(!$email){
+        $email_err = 'Please enter your Email';
+        $submit = false;
+    }
 
- $rs = mysqli_query($conn,$sql);
- if($rs){
-     echo "Success";
- }else{
-     echo "Failed";
- }
+    if($email && $password){
+      login($email,$password);
+    }
 
-
+}
 ?>

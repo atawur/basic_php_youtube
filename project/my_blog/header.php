@@ -84,7 +84,7 @@
                                     </ul>
                                 </li>
                                 <li class="menu-btn">
-                                    <a href="#" class="login">log in</a>
+                                    <a href="login.php" class="login">log in</a>
                                     <a href="registration.php" class="template-btn">sign up</a>
                                 </li>
                             </ul>

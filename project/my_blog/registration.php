@@ -10,7 +10,7 @@
     $mobile_number_err = '';
     $password_err='';
     $confir_pasword_err= '';
-
+    $success='';
     $submit = true;
 if(isset($_POST['save'])){
   extract($_POST);
@@ -61,8 +61,7 @@ if(isset($_POST['save'])){
   if(!$password){
     $password_err='Paswword required';
     $submit = false;
-  }
-  if($password && (strlen($password)<8) ){
+  }else if($password && (strlen($password)<8) ){
       $password_err='Password Must be getter eigth character';
       $submit = false;
      
@@ -77,12 +76,14 @@ if(isset($_POST['save'])){
   }
 
 if($submit ){
-  $sql = "insert into users(first_name,middle_name,last_name,email,password,mobile_number) values('$fname','$middle_name','$last_name','$email','$password','$mobile_number')";
+  $md5= md5($password);
+  $sql = "insert into users(first_name,middle_name,last_name,email,password,mobile_number) values('$fname','$middle_name','$last_name','$email','$md5','$mobile_number')";
   $rs = mysqli_query($conn,$sql);
   if($rs){
-      echo "Success";
+    $success= "Registration Success";
+     
   }else{
-      echo "Failed";
+    $success= "Failed";
   }
 }
   
@@ -93,30 +94,34 @@ if($submit ){
 ?>
 
 <div class="container">
+<h3 style='text-align:center'>Registration Form</h3>
+<?php if($success){?>
+  <h4 style='text-align:center;color:green'><?php echo $success;?></h4>
+<?php } ?>
 <form action="./registration.php"  method="post">
 <div class="form-group">
     <label for="first_name">First name</label>
-    <input type="text" class="form-control" id="first_name" name='fname' >
+    <input type="text" class="form-control" id="first_name" value="<?php if(isset($fname)){echo $fname;}?>" name='fname' >
     <span style='color:red'><?php echo $frst_name_err; ?></span>
   </div>
   <div class="form-group">
     <label for="first_name">Middle name</label>
-    <input type="text" class="form-control" id="middle_name"   name="middle_name">
+    <input type="text" class="form-control" id="middle_name"  value="<?php if(isset($middle_name)){echo $middle_name;}?>"  name="middle_name">
     <span style='color:red'><?php echo $middle_name_err; ?></span>
   </div>
   <div class="form-group">
     <label for="last_name">last name</label>
-    <input type="text" class="form-control" id="last_name"   name="last_name">
+    <input type="text" class="form-control" id="last_name" value="<?php if(isset($last_name)){echo $last_name;}?>"  name="last_name">
     <span style='color:red'><?php echo $last_name_err; ?></span>
   </div>
   <div class="form-group">
     <label for="mobile_number">Mobile Number</label>
-    <input type="text" class="form-control" id="mobile_number"  name="mobile_number">
+    <input type="text" class="form-control" id="mobile_number" value="<?php if(isset($mobile_number)){echo $mobile_number;}?>"  name="mobile_number">
     <span style='color:red'><?php echo $mobile_number_err; ?></span>
   </div>
   <div class="form-group">
     <label for="email">Email address:</label>
-    <input type="text" class="form-control" id="email"  name='email'>
+    <input type="text" class="form-control" id="email" value="<?php if(isset($email)){echo $email;}?>" name='email'>
     <span style='color:red'><?php echo $email_err; ?></span>
   </div>
   <div class="form-group">

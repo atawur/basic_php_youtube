@@ -12,10 +12,21 @@ function check_email($email){
     $query = mysqli_query($conn,$sql);
     $row = mysqli_fetch_assoc($query);
     return  $row;
-
 }
 
+ function login($email,$password){
+    global $conn;
+     $md5_pass = md5($password);
+     $sql ="select * from users where email= '$email' and password = '$md5_pass'";
+     //echo $sql;
+     $query = mysqli_query($conn,$sql);
+     $row = mysqli_fetch_assoc($query);
+     if($row){
+       header("Location: ./dashboard.php");
+     }else{
+         echo "Login failed";
+     }
+     //return  $row;
 
 
-
-?>
+ }
