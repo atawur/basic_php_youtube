@@ -1,4 +1,7 @@
 <?php
+if(session_status()==PHP_SESSION_NONE){
+    session_start();
+}
 include_once('./db/db_connect.php');
  function check_data($data){
      $trim_data = trim($data);
@@ -22,6 +25,10 @@ function check_email($email){
      $query = mysqli_query($conn,$sql);
      $row = mysqli_fetch_assoc($query);
      if($row){
+
+        //echo $row->users_id;
+        //exit();
+         $_SESSION['users_id']= $row['users_id'];
        header("Location: ./dashboard.php");
      }else{
          echo "Login failed";

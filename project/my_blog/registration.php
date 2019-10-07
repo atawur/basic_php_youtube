@@ -1,28 +1,23 @@
 <?php
-    require_once("./header.php");
+ require_once("./header.php");
     include('./db/db_connect.php');
     include ('./functions.php');
-    
-    $frst_name_err = '';
-    $last_name_err = '';
-    $middle_name_err ='';
-    $email_err = '';
-    $mobile_number_err = '';
-    $password_err='';
-    $confir_pasword_err= '';
-    $success='';
+    $frst_name_err = $last_name_err=$middle_name_err=$email_err=$mobile_number_err =$password_err=$confir_pasword_err= $success='';
     $submit = true;
 if(isset($_POST['save'])){
   extract($_POST);
   // if you are not using extract function
-  $fname = check_data($_POST['fname']);
-  $middle_name = check_data($_POST['middle_name']);
-  $last_name = check_data($_POST['last_name']);
+  $first_name = check_data($_POST['fname']);
+  $fname = mysqli_real_escape_string($conn,$first_name);
+  $middleName = check_data($_POST['middle_name']);
+  $middle_name = mysqli_real_escape_string($conn,$middleName);
+
+  $last_name = mysqli_real_escape_string($conn,check_data($_POST['last_name']));
 /// if you are using extract function
   
-  $password = check_data($password);
-  $confirm_password = check_data($confirm_password);
-  $mobile_number = check_data($mobile_number);
+  $password = mysqli_real_escape_string($conn,check_data($password));
+  $confirm_password = mysqli_real_escape_string($conn,check_data($confirm_password));
+  $mobile_number = mysqli_real_escape_string($conn,check_data($mobile_number));
 
   if(!$fname){
     $frst_name_err = 'First  Required';
@@ -81,6 +76,7 @@ if($submit ){
   $rs = mysqli_query($conn,$sql);
   if($rs){
     $success= "Registration Success";
+    $fname=$middle_name=$last_name=$email=$mobile_number=$password=$confirm_password='';
      
   }else{
     $success= "Failed";

@@ -17,7 +17,9 @@ if(isset($_POST['login'])){
     }
 
     if($email && $password){
-      login($email,$password);
+      $filteremail = mysqli_real_escape_string($conn,check_data($email));
+      $filterpassword = mysqli_real_escape_string($conn,check_data($password));
+      login($filteremail, $filterpassword);
     }
 
 }
