@@ -2,8 +2,6 @@
 if(session_status()==PHP_SESSION_NONE){
     session_start();
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,6 +93,7 @@ if(session_status()==PHP_SESSION_NONE){
                                     <a href="login.php" class="login">log in</a>
                                     <a href="registration.php" class="template-btn">sign up</a>
                                 <?php } else{?>
+                                    <a href="profile.php" >Profile</a>
                                     <a href="logout.php" class="template-btn">Logout</a>
                                 <?php } ?>
                                 </li>

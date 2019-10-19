@@ -1,6 +1,7 @@
 <?php
 include('./db/db_connect.php');
 include ('./functions.php');
+redirect_dashboard();
 $password_err='';
 $email_err = '';
 if(isset($_POST['login'])){

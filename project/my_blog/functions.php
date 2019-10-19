@@ -34,6 +34,26 @@ function check_email($email){
          echo "Login failed";
      }
      //return  $row;
-
-
  }
+
+function redirect_dashboard(){
+    if(isset($_SESSION['users_id'])){
+        header("Location: dashboard.php");
+    }
+}
+
+function redirect_login(){
+    if(!isset($_SESSION['users_id'])){
+        header("Location: login.php");
+    }
+}
+
+function get_userinfo(){
+    global $conn;
+    $userid= $_SESSION['users_id'];
+    $sql = "select *  from users where users_id=$userid";
+    $query = mysqli_query($conn,$sql);
+    $row = mysqli_fetch_assoc($query);
+    return  $row;
+}
+
