@@ -9,6 +9,9 @@ require_once("./header.php");
 ?>
 <div class="container">
 <h3 style='text-align:center'>User Profile</h3>
+<div>
+ <image src='<?php echo $user_info['profile_picture'];?>' height='200' width= '200'/>
+</div>
 <table class="table table-striped">
     
     <tbody>
