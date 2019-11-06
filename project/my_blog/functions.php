@@ -103,7 +103,10 @@ function file_upload($file,$name){
 
     //echo '<pre>';
     //print_r($file);
-    move_uploaded_file($file[$name]['tmp_name'],$upload_path);
+    if($status){
+        move_uploaded_file($file[$name]['tmp_name'],$upload_path);
+    }
+    
     $message['status'] = $status;
     $message['msg']= $msg; 
     if($status){
