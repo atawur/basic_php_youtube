@@ -2,7 +2,7 @@
 
     include('./db/db_connect.php');
     include ('./functions.php');
-    $frst_name_err = $last_name_err=$middle_name_err=$email_err=$mobile_number_err =$password_err=$confir_pasword_err= $success='';
+    $frst_name_err = $last_name_err=$middle_name_err=$email_err=$mobile_number_err =$password_err=$confir_pasword_err= $success=$image_err='';
     $submit = true;
 if(isset($_POST['save'])){
   extract($_POST);
@@ -71,15 +71,19 @@ if(isset($_POST['save'])){
   if(($password && $confirm_password) && ($password !== $confirm_password)){
       $confir_pasword_err= 'Password and confirm password must be equal';
       $submit = false;
+
   }
   $file_path ='';
   if(isset($_FILES)){
     $file_path = file_upload($_FILES,'profile_pic');
+    $submit = $file_path['status'];
+    $image_err = $file_path['msg'];
+    $path = $file_path['path'];
   }
-  
+ 
 if($submit ){
   $md5= md5($password);
-  $sql = "insert into users(first_name,middle_name,last_name,email,password,mobile_number,profile_picture) values('$fname','$middle_name','$last_name','$email','$md5','$mobile_number','$file_path')";
+  $sql = "insert into users(first_name,middle_name,last_name,email,password,mobile_number,profile_picture) values('$fname','$middle_name','$last_name','$email','$md5','$mobile_number','$path')";
   $rs = mysqli_query($conn,$sql);
   if($rs){
     $success= "Registration Success";
@@ -140,7 +144,7 @@ require_once("./header.php");
   <div class="form-group">
     <label for="confirm_password">Select Image</label>
     <input type="file" class="form-control" id="profile_pic"  name='profile_pic'>
-    <span style='color:red'></span>
+    <span style='color:red'><?php echo $image_err;?></span>
   </div>
   <button type="submit" class="btn btn-primary" name='save'>submit</button>
 </form>
