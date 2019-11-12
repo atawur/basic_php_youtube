@@ -74,7 +74,7 @@ if(isset($_POST['save'])){
 
   }
   $file_path ='';
-  if(isset($_FILES)){
+  if(isset($_FILES) && $_FILES['profile_pic']['size'] >0){
     $file_path = file_upload($_FILES,'profile_pic');
     $submit = $file_path['status'];
     $image_err = $file_path['msg'];

@@ -1,7 +1,7 @@
 <?php
     include('./db/db_connect.php');
     include ('./functions.php');
-    $frst_name_err = $last_name_err=$middle_name_err=$email_err=$mobile_number_err =$password_err=$confir_pasword_err= $success='';
+    $frst_name_err = $last_name_err=$middle_name_err=$email_err=$mobile_number_err =$password_err=$confir_pasword_err= $success=$image_err='';
     $user_info = get_userinfo();
 
     if(isset($_POST['update'])){
@@ -67,15 +67,30 @@
             $confir_pasword_err= 'Password and confirm password must be equal';
             $submit = false;
         }
+        $file_path_query ='';
+        if(isset($_FILES['profile_pic']) && $_FILES['profile_pic']['size'] >0){
+          print_r($_FILES['profile_pic']);
+          $file_path = file_upload($_FILES,'profile_pic');
+          if($file_path['status']==false){
+            $submit = $file_path['status'];
+          }
+         
+          $image_err = $file_path['msg'];
+          $path = $file_path['path'];
+          $file_path_query =",profile_picture ='$path'";
+        }
         if($submit){
             $user_id_session=$_SESSION['users_id'];
             $users_id_get= base64_decode($_GET['users_id']);
             $users_id_post = base64_decode($users_id);
 
-            $sql = "update users set first_name='$fname',middle_name ='$middle_name',last_name = ' $last_name',email= '$email',mobile_number='$mobile_number'  where users_id =$users_id_get";
+            $sql = "update users set first_name='$fname',middle_name ='$middle_name',last_name = ' $last_name',email= '$email',mobile_number='$mobile_number' $file_path_query  where users_id =$users_id_get";
             //echo $sql;
             //exit();
-            mysqli_query($conn,$sql);
+            $rs = mysqli_query($conn,$sql);
+            if($rs){
+               unlink($user_info['profile_picture']);
+            }
             header("Location:./profile.php");
 
         }
@@ -91,7 +106,7 @@ require_once("./header.php");
 <?php if($success){?>
   <h4 style='text-align:center;color:green'><?php echo $success;?></h4>
 <?php } ?>
-<form action="./edit_profile.php?users_id=<?php  if(isset($user_info)){echo base64_encode($user_info['users_id']);}?>"  method="post">
+<form action="./edit_profile.php?users_id=<?php  if(isset($user_info)){echo base64_encode($user_info['users_id']);}?>"  method="post" enctype="multipart/form-data">
 <div class="form-group">
     <label for="first_name">First name</label>
     <input type="text" class="form-control" id="first_name" value="<?php  if(isset($fname)){echo $fname; } else if(isset($user_info)){echo $user_info['first_name'];}?>" name='fname' >
@@ -126,6 +141,11 @@ require_once("./header.php");
     <label for="confirm_password">Confirm Password:</label>
     <input type="password" class="form-control" id="pwd"  name='confirm_password'>
     <span style='color:red'><?php echo $confir_pasword_err; ?></span>
+  </div>
+  <div class="form-group">
+    <label for="confirm_password">Select Image</label>
+    <input type="file" class="form-control" id="profile_pic"  name='profile_pic'>
+    <span style='color:red'><?php echo $image_err;?></span>
   </div>
   <input type='hidden' name='users_id' value='<?php  if(isset($user_info)){echo base64_encode($user_info['users_id']);}?>'/>
   <button type="submit" class="btn btn-default" name='update'>Update</button>
