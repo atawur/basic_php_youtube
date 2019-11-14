@@ -1,9 +1,9 @@
 <?php
     include('./db/db_connect.php');
     include ('./functions.php');
-    $frst_name_err = $last_name_err=$middle_name_err=$email_err=$mobile_number_err =$password_err=$confir_pasword_err= $success=$image_err='';
+    $frst_name_err = $last_name_err=$middle_name_err=$email_err=$mobile_number_err =$password_err=$confir_pasword_err= $success=$image_err=$path='';
     $user_info = get_userinfo();
-
+    $file_delete = false;
     if(isset($_POST['update'])){
         
         $submit = true;
@@ -69,10 +69,15 @@
         }
         $file_path_query ='';
         if(isset($_FILES['profile_pic']) && $_FILES['profile_pic']['size'] >0){
-          print_r($_FILES['profile_pic']);
+          //print_r($_FILES['profile_pic']);
           $file_path = file_upload($_FILES,'profile_pic');
+
+         // print_r( $file_path );
+          //exit();
           if($file_path['status']==false){
             $submit = $file_path['status'];
+          }else{
+            $file_delete = true;
           }
          
           $image_err = $file_path['msg'];
@@ -88,11 +93,16 @@
             //echo $sql;
             //exit();
             $rs = mysqli_query($conn,$sql);
-            if($rs){
+            if($rs && $file_delete){
                unlink($user_info['profile_picture']);
             }
             header("Location:./profile.php");
 
+        }else{
+          if($path){
+              unlink($path);
+          }
+          
         }
 
     }

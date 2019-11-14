@@ -2,7 +2,7 @@
 
     include('./db/db_connect.php');
     include ('./functions.php');
-    $frst_name_err = $last_name_err=$middle_name_err=$email_err=$mobile_number_err =$password_err=$confir_pasword_err= $success=$image_err='';
+    $frst_name_err = $last_name_err=$middle_name_err=$email_err=$mobile_number_err =$password_err=$confir_pasword_err= $success=$image_err=$path='';
     $submit = true;
 if(isset($_POST['save'])){
   extract($_POST);
@@ -76,11 +76,13 @@ if(isset($_POST['save'])){
   $file_path ='';
   if(isset($_FILES) && $_FILES['profile_pic']['size'] >0){
     $file_path = file_upload($_FILES,'profile_pic');
-    $submit = $file_path['status'];
+    if($file_path['status']==false){
+      $submit = $file_path['status'];
+    }
     $image_err = $file_path['msg'];
     $path = $file_path['path'];
   }
- 
+
 if($submit ){
   $md5= md5($password);
   $sql = "insert into users(first_name,middle_name,last_name,email,password,mobile_number,profile_picture) values('$fname','$middle_name','$last_name','$email','$md5','$mobile_number','$path')";
@@ -91,6 +93,11 @@ if($submit ){
      
   }else{
     $success= "Failed";
+    
+  }
+}else{
+  if($path){
+    unlink($path);
   }
 }
   
