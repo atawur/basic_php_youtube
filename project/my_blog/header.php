@@ -80,14 +80,16 @@ if(session_status()==PHP_SESSION_NONE){
                                     </ul>
                                 </li>
                                 <li><a href="contact-us.html">contact</a></li>
-                                <li><a href="#">pages</a>
+                                <?php if(isset($_SESSION['users_id']) && $_SESSION['user_type_id']==1){?>   
+                                <li><a href="#">Settings</a>
                                     <ul class="sub-menu">
-                                        <li><a href="job-search.html">Job Search</a></li>
+                                        <li><a href="category.php">Category Setting</a></li>
                                         <li><a href="job-single.html">Job Single</a></li>
                                         <li><a href="pricing-plan.html">Pricing Plan</a></li>
                                         <li><a href="elements.html">Elements</a></li>
                                     </ul>
                                 </li>
+                                <?php } ?>
                                 <li class="menu-btn">    
                                 <?php if(!isset($_SESSION['users_id'])){?>       
                                     <a href="login.php" class="login">log in</a>

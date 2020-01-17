@@ -1,6 +1,7 @@
 <?php
     include('./db/db_connect.php');
     include ('./functions.php');
+    redirect_login();
     $frst_name_err = $last_name_err=$middle_name_err=$email_err=$mobile_number_err =$password_err=$confir_pasword_err= $success=$image_err=$path='';
     $user_info = get_userinfo();
     $file_delete = false;

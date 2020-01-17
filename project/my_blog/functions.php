@@ -36,6 +36,7 @@ function check_email($email,$userid=null){
         //echo $row->users_id;
         //exit();
          $_SESSION['users_id']= $row['users_id'];
+         $_SESSION['user_type_id']= $row['user_type_id'];
        header("Location: ./dashboard.php");
      }else{
          echo "Login failed";
@@ -119,4 +120,9 @@ function file_upload($file,$name){
 
 }
 
+function check_admin_access(){
+    if($_SESSION['user_type_id'] !=1){
+        header("Location: forbidden.php");
+    }
+}
 

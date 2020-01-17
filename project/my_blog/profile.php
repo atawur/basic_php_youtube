@@ -6,6 +6,7 @@ $user_info = get_userinfo();
 ?>
 <?php 
 require_once("./header.php");
+
 ?>
 <div class="container">
 <h3 style='text-align:center'>User Profile</h3>
