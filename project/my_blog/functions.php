@@ -126,3 +126,55 @@ function check_admin_access(){
     }
 }
 
+function save_category_info($name,$status){
+    global $conn;
+    $userid= $_SESSION['users_id'];
+    $date = date('Y-m-d');
+    $insert_sql = "insert into category(name,status,created_by,created_at) values('$name','$status','$userid','$date')";
+    $query = mysqli_query($conn,$insert_sql);
+}
+ function check_category_name($name=null,$id=null,$is_update = false){
+
+    global $conn;
+
+    $where_conditions = '';
+
+    if($name){
+        $where_conditions = "where name='$name'";
+    }
+
+    if($id){
+        $where_conditions = " where id=$id";
+    }
+    if($is_update){
+        $where_conditions = "where name='$name' and  id !=$id";
+    }
+    $sql = "SELECT * FROM category  $where_conditions";
+    $query = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($query);
+    return $row;
+ }
+
+ function get_all_category(){
+    global $conn;
+    $sql = "SELECT category.*, status.name as category_name FROM category JOIN status on category.status = status.id";
+    $result = mysqli_query($conn, $sql);
+    return $result;
+ }
+
+ function update_category($name,$status,$id){
+    global $conn;
+    $userid= $_SESSION['users_id'];
+    $date = date('Y-m-d');
+    $sql = "UPDATE category SET name='$name',status=$status,updated_by=$userid,updated_at='$date' where id=$id";
+    $result = mysqli_query($conn, $sql);
+    return $result;
+ }
+
+ function delete_category($id){
+     $sq= "delete from category  where id=$id";
+     global $conn;
+     $result = mysqli_query($conn,   $sq);
+     return $result;
+ }
+
