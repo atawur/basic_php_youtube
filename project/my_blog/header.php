@@ -73,12 +73,7 @@ if(session_status()==PHP_SESSION_NONE){
                                 <li class="active"><a href="index.html">home</a></li>
                                 <li><a href="about.html">about us</a></li>
                                 <li><a href="job-category.html">category</a></li>
-                                <li><a href="#">blog</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="blog-home.html">Blog Home</a></li>
-                                        <li><a href="blog-details.html">Blog Details</a></li>
-                                    </ul>
-                                </li>
+                                
                                 <li><a href="contact-us.html">contact</a></li>
                                 <?php if(isset($_SESSION['users_id']) && $_SESSION['user_type_id']==1){?>   
                                 <li><a href="#">Settings</a>
@@ -90,15 +85,21 @@ if(session_status()==PHP_SESSION_NONE){
                                     </ul>
                                 </li>
                                 <?php } ?>
-                                <li class="menu-btn">    
+                                  
                                 <?php if(!isset($_SESSION['users_id'])){?>       
-                                    <a href="login.php" class="login">log in</a>
-                                    <a href="registration.php" class="template-btn">sign up</a>
+                                    <li class="menu-btn">  <a href="login.php" class="login">log in</a> </li>
+                                    <li class="menu-btn">  <a href="registration.php" class="template-btn">sign up</a></li>
                                 <?php } else{?>
-                                    <a href="profile.php" >Profile</a>
-                                    <a href="logout.php" class="template-btn">Logout</a>
+                                    <li><a href="#">blog</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="new_post.php">New Post</a></li>
+                                            <li><a href="all_post.php">All Post</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-btn"> <a href="profile.php" >Profile</a></li>
+                                    <li class="menu-btn"> <a href="logout.php" class="template-btn">Logout</a></li>
                                 <?php } ?>
-                                </li>
+                               
                             </ul>
                         </div>
                     </div>

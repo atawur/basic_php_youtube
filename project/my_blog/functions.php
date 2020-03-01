@@ -178,3 +178,57 @@ function save_category_info($name,$status){
      return $result;
  }
 
+ function save_post(){
+
+ }
+
+ function get_all_post($where_conditions=null){
+    global $conn;
+    $sql = "
+        SELECT
+    posts.*,
+    category.`name` category_name,
+    users.first_name,
+    users.middle_name,
+    users.last_name,
+    users.email,
+    `status`.`name` status_name
+    FROM
+    posts
+    INNER JOIN category ON posts.category_id = category.id
+    INNER JOIN users ON posts.created_by = users.users_id
+    INNER JOIN `status` ON posts.`status` = `status`.id
+    
+    ";
+    if($where_conditions){
+       $sql =  $sql .  $where_conditions;
+    }
+    $sql = $sql." order by posts.id desc";
+    $result = mysqli_query($conn, $sql);
+    return $result;
+ }
+
+ function get_post_by_id($post_id){
+    global $conn;
+    $sql = "
+        SELECT
+    posts.*,
+    category.`name` category_name,
+    users.first_name,
+    users.middle_name,
+    users.last_name,
+    users.email,
+    `status`.`name` status_name
+    FROM
+    posts
+    INNER JOIN category ON posts.category_id = category.id
+    INNER JOIN users ON posts.created_by = users.users_id
+    INNER JOIN `status` ON posts.`status` = `status`.id
+    where posts.id= $post_id
+    ";
+    //echo $sql;
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return  $row;
+
+ }
