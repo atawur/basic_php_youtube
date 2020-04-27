@@ -28,13 +28,13 @@ if(isset($_POST['post_save'])){
     if(!$full_description){
         $submit = false;
         $full_description_err = 'Please Input the full_description';
-     
+
     }
-  
+
    if(empty($_FILES['feature_image']['name'])){
     $submit = false;
     $image_err = 'Please Select an Image';
- 
+
    }else{
         $file_path_info = file_upload($_FILES,'feature_image');
         if(!$file_path_info['path']){
@@ -43,22 +43,46 @@ if(isset($_POST['post_save'])){
         }else{
             $file_path  = $file_path_info['path'];
         }
-       
-       
+
+
    }
-    
+
 
     if($submit){
-        $sql = "insert into posts( `title`, `category_id`, `sort_description`, `full_description`, `feature_image`, `created_by`, `created`,`status`)values('$title', $category_id,' $sort_description', '$full_description', '$file_path', $userid, '$date',3)";
+        $sql = "insert into posts( `title`,
+        `category_id`,
+        `sort_description`,
+        `full_description`,
+        `feature_image`,
+        `created_by`,
+        `created`,
+        `status`)
+    values
+        (".'"'.$title.'"'.",
+         $category_id,
+        ".'"'.$sort_description.'"'.",
+        ".'"'.$full_description.'"'.",
+        '$file_path',
+         $userid,
+        '$date'
+       ,3)";
+        //echo $sql;
+        //exit();
         $query = mysqli_query($conn,$sql);
-        $title = $category_id = $sort_description = $full_description= '';
-        $message= 'successfully saved';
+
+        if($query){
+            $title = $category_id = $sort_description = $full_description= '';
+            $message= '<div style="color:green">successfully saved</div>';
+        }else{
+            $message= '<div style="color:red">Something went wrong</div>';
+        }
+
     }else{
         if($file_path){
             unlink($file_path);
         }
     }
-    
+
 }
 
 if(isset($_POST['post_update'])){
@@ -83,9 +107,9 @@ if(isset($_POST['post_update'])){
     if(!$full_description){
         $submit = false;
         $full_description_err = 'Please Input the full_description';
-     
+
     }
-  
+
    if($_FILES['feature_image']['name']){
         $file_path_info = file_upload($_FILES,'feature_image');
         if(!$file_path_info['path']){
@@ -95,26 +119,23 @@ if(isset($_POST['post_update'])){
             $file_path  = $file_path_info['path'];
         }
         $file_path_sql =  "feature_image='$file_path' ,";
- 
+
    }else{
     $file_path_sql = '';
    }
     if($submit){
         $sql = " update posts set
-         `title`='$title',
+         `title`=".'"'.$title.'"'.",
         `category_id`= $category_id,
-        `sort_description`='$sort_description',
-        `full_description`='$full_description',
+        `sort_description`=".'"'.$sort_description.'"'.",
+        `full_description`=".'"'.$full_description.'"'.",
          $file_path_sql
         `updated_by`=$userid,
         `updated`='$date',
-        `status`=3 
+        `status`=3
          where id = $postid
-        
-        "
+        ";
 
-        
-        ;
         $query = mysqli_query($conn,$sql);
         $message= 'successfully updated';
         $title = $category_id = $sort_description = $full_description= '';
@@ -123,7 +144,7 @@ if(isset($_POST['post_update'])){
             unlink($file_path);
         }
     }
-    
+
 }
 if(isset($_GET['id'])){
     $post_id = base64_decode($_GET['id']);
@@ -138,19 +159,16 @@ if(isset($_GET['id'])){
 
 
     }
-    //echo '<pre>';
-    //print_r($post_info);
-    
 }
 
 ?>
-<?php 
+<?php
 require_once("./header.php");
 ?>
 <div class="container">
 <h3 style='text-align:center'>Add New Post</h3>
-<div style='color:green;font-weight:bold'>
-    <?php 
+<div style='font-weight:bold'>
+    <?php
         if(isset($message)){
             echo $message;
         }
@@ -204,8 +222,7 @@ require_once("./header.php");
 </div>
 
 
-<?php 
+<?php
 include_once("./footer.php");
 
 ?>
-   

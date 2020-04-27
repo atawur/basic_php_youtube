@@ -80,7 +80,7 @@ function file_upload($file,$name){
         $status = false;
         $msg = "file is not an image";
     }
-    
+
     if($image_size[0] > 3000000){
         $status = false;
         $msg = "file reach maximum width";
@@ -93,11 +93,11 @@ function file_upload($file,$name){
         $status = false;
         $msg = "file is largert then 2mb";
     }
-    
+
     if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
     && $imageFileType != "gif" ) {
         //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-        
+
         $status = false;
         $msg = "Sorry, only jpg, jpeg, png & gif files are allowed.";
     }
@@ -107,15 +107,15 @@ function file_upload($file,$name){
     if($status){
         move_uploaded_file($file[$name]['tmp_name'],$upload_path);
     }
-    
+
     $message['status'] = $status;
-    $message['msg']= $msg; 
+    $message['msg']= $msg;
     if($status){
         $message['path']=$upload_path;
     }else{
         $message['path']='';
     }
-    
+
     return $message;
 
 }
@@ -198,7 +198,7 @@ function save_category_info($name,$status){
     INNER JOIN category ON posts.category_id = category.id
     INNER JOIN users ON posts.created_by = users.users_id
     INNER JOIN `status` ON posts.`status` = `status`.id
-    
+
     ";
     if($where_conditions){
        $sql =  $sql .  $where_conditions;
@@ -224,9 +224,8 @@ function save_category_info($name,$status){
     INNER JOIN category ON posts.category_id = category.id
     INNER JOIN users ON posts.created_by = users.users_id
     INNER JOIN `status` ON posts.`status` = `status`.id
-    where posts.id= $post_id
+    where posts.id= '$post_id'
     ";
-    //echo $sql;
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     return  $row;

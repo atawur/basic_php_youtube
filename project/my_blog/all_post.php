@@ -35,7 +35,7 @@
 
     <h2>Welcome</h2>
     <h4>
-     <?php 
+     <?php
       if(isset($_SESSION['message'])){
           echo $_SESSION['message'];
           unset($_SESSION['message']);
@@ -53,7 +53,7 @@
         <th>Actions</th>
     </tr>
 
-    <?php 
+    <?php
     if($_SESSION['user_type_id'] ==1){
         $where = '';
     }else{
@@ -72,15 +72,15 @@
             <td><?php echo $row['created'];?></td>
             <td><?php echo $row['status_name'];?></td>
             <td>
-                <a href="./new_post.php?id=<?php echo base64_encode($row['id']); ?>">Edit</a> 
+                <a href="./new_post.php?id=<?php echo base64_encode($row['id']); ?>">Edit</a> |
+                <a href="./view_post.php?id=<?php echo base64_encode($row['id']); ?>">View</a>
             </td>
         </tr>
     <?php } } ?>
     </table>
 </div>
 
-<?php 
+<?php
 include_once("./footer.php");
 
 ?>
-   
