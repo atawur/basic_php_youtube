@@ -182,8 +182,8 @@ function save_category_info($name,$status){
 
  }
 
- function get_all_post($where_conditions=null){
-    global $conn;
+ function get_all_post($where_conditions=null,$pegination=false,$offset=null,$no_of_records_per_page=null){
+     global $conn;
     $sql = "
         SELECT
     posts.*,
@@ -203,7 +203,12 @@ function save_category_info($name,$status){
     if($where_conditions){
        $sql =  $sql .  $where_conditions;
     }
+
     $sql = $sql." order by posts.id desc";
+     if($pegination){
+         $sql = $sql." limit  $offset , $no_of_records_per_page";
+     }
+    echo $sql;
     $result = mysqli_query($conn, $sql);
     return $result;
  }

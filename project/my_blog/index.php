@@ -6,11 +6,18 @@
   require_once("./header.php");
   require_once ('./functions.php');
     $where_condition = 'Where posts.status=1';
-    $all_post = get_all_post($where_condition);
-    //echo '<pre>';
-    //print_r($all_post);
-   // exit();
+    $total = get_all_post($where_condition);
+    $total_rows = $total->num_rows;
+    if (isset($_GET['pageno'])) {
+        $pageno = $_GET['pageno'];
+    } else {
+        $pageno = 1;
+    }
+    $no_of_records_per_page = 2;
+    $offset = ($pageno-1) * $no_of_records_per_page;
+    $total_pages = ceil($total_rows / $no_of_records_per_page);
 
+    $all_post = get_all_post($where_condition,true,$offset,$no_of_records_per_page);
 ?>
 
 <!-- Page Title Starts -->
@@ -65,8 +72,16 @@
                                     </div>
                                 </div>
 
-                                <?php }} else{ ?>
-                                <div>NO Data Found</div>
+                                <?php }?>
+                                    <ul class="pegination">
+                                        <?php for($i=1;$i<=$total_pages;$i++){?>
+                                            <li style="display: inline;border: 1px solid grey;margin: 3px;padding: 3px">
+                                                <a href="?pageno=<?php echo $i;?>"><?php echo $i;?></a>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                               <?php } else{ ?>
+                                <div>No Data Found</div>
                                 <?php } ?>
                             </div>
                             <?php include_once('right_sidebar.php');?>
