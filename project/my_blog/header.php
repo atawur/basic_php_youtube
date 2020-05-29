@@ -1,4 +1,4 @@
-<?php 
+<?php
 if(session_status()==PHP_SESSION_NONE){
     session_start();
 }
@@ -51,7 +51,7 @@ if(session_status()==PHP_SESSION_NONE){
                         <a class="dn_btn" href="tel:+4400123654896">+440 012 3654 896</a>
                         <a class="dn_btn" href="mailto:support@colorlib.com">support@colorlib.com</a>
                     </div>
-                </div>	
+                </div>
             </div>
         </div>
         <div class="header-area blog-menu">
@@ -59,7 +59,7 @@ if(session_status()==PHP_SESSION_NONE){
                 <div class="row">
                     <div class="col-lg-2">
                         <div class="logo-area">
-                            <a href="index.html"><img src="assets/images/logo.png" alt="logo"></a>
+                            <a href="index.php"><img src="assets/images/logo.png" alt="logo"></a>
                         </div>
                     </div>
                     <div class="col-lg-10">
@@ -67,15 +67,15 @@ if(session_status()==PHP_SESSION_NONE){
                             <span></span>
                             <span></span>
                             <span></span>
-                        </div>  
+                        </div>
                         <div class="main-menu">
                             <ul>
-                                <li class="active"><a href="index.html">home</a></li>
+                                <li class="active"><a href="index.php">home</a></li>
                                 <li><a href="about.html">about us</a></li>
                                 <li><a href="job-category.html">category</a></li>
-                                
+
                                 <li><a href="contact-us.html">contact</a></li>
-                                <?php if(isset($_SESSION['users_id']) && $_SESSION['user_type_id']==1){?>   
+                                <?php if(isset($_SESSION['users_id']) && $_SESSION['user_type_id']==1){?>
                                 <li><a href="#">Settings</a>
                                     <ul class="sub-menu">
                                         <li><a href="category.php">Category Setting</a></li>
@@ -85,8 +85,8 @@ if(session_status()==PHP_SESSION_NONE){
                                     </ul>
                                 </li>
                                 <?php } ?>
-                                  
-                                <?php if(!isset($_SESSION['users_id'])){?>       
+
+                                <?php if(!isset($_SESSION['users_id'])){?>
                                     <li class="menu-btn">  <a href="login.php" class="login">log in</a> </li>
                                     <li class="menu-btn">  <a href="registration.php" class="template-btn">sign up</a></li>
                                 <?php } else{?>
@@ -99,7 +99,7 @@ if(session_status()==PHP_SESSION_NONE){
                                     <li class="menu-btn"> <a href="profile.php" >Profile</a></li>
                                     <li class="menu-btn"> <a href="logout.php" class="template-btn">Logout</a></li>
                                 <?php } ?>
-                               
+
                             </ul>
                         </div>
                     </div>

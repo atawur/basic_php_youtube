@@ -45,16 +45,17 @@ require_once("./header.php");
                     }
                 ?>
                 <?php include_once ('./single_post.php')?>
-
-                <form action="view_post.php" method="post">
-                   <input type="hidden" value="<?php echo base64_encode($id);?>" name="post_id"/>
-                    <?php if($status==3 || $status== 2){?>
-                        <button class="btn btn-primary" name="approve">Approve</button>
-                    <?php }?>
-                    <?php if($status==3 || $status==1){?>
-                        <button class="btn btn-primary" name="unapprove">Un Approve</button>
-                    <?php }?>
-                </form>
+                <?php if($user_info && $user_info['user_type_id']==1){?>
+                    <form action="view_post.php" method="post">
+                       <input type="hidden" value="<?php echo base64_encode($id);?>" name="post_id"/>
+                        <?php if($status==3 || $status== 2){?>
+                            <button class="btn btn-primary" name="approve">Approve</button>
+                        <?php }?>
+                        <?php if($status==3 || $status==1){?>
+                            <button class="btn btn-primary" name="unapprove">Un Approve</button>
+                        <?php }?>
+                    </form>
+                <?php }?>
                 <br/>
             </div>
     <?php }else {?>
