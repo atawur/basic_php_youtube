@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 01, 2020 at 01:42 PM
+-- Generation Time: May 29, 2020 at 11:55 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -93,7 +93,11 @@ INSERT INTO `posts` (`id`, `title`, `category_id`, `sort_description`, `full_des
 (20, 'my updated post bb', 11, '   eee', '     eee', 'uploads/12038455_1606880109572852_3299830544788085796_n90645064.jpg', 20, '2020-03-01 18:06:50', 0, '0000-00-00 00:00:00', 3),
 (21, 'test update vvv', 11, ' erere', '    erer', 'uploads/12038455_1606880109572852_3299830544788085796_n42569543.jpg', 20, '2020-03-01 18:07:07', 20, '2020-03-01 18:32:56', 3),
 (22, 'test edited', 11, ' ddd', '  ddd', 'uploads/12038455_1606880109572852_3299830544788085796_n48248604.jpg', 20, '2020-03-01 18:33:30', 20, '2020-03-01 18:33:45', 3),
-(23, 'tech bd ffgfgf', 11, ' ddd', '   ddd', 'uploads/74419832_463662427609629_8605329442711011328_n48885847.jpg', 21, '2020-03-01 18:39:10', 20, '2020-03-01 18:40:06', 3);
+(23, 'This is test', 11, '   It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content h', '   It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/99116495_328852358087454_7364063669166014464_n15153225.jpg', 21, '2020-03-01 18:39:10', 21, '2020-05-30 01:29:13', 1),
+(24, 'ss', 11, ' this is sort des', ' sss', 'uploads/MeatPoultryFish_ICHeader81576456.jpg', 20, '2020-04-27 02:35:10', 0, '0000-00-00 00:00:00', 1),
+(25, 'test', 11, ' gg\'s', ' teet', 'uploads/MeatPoultryFish_ICHeader60399478.jpg', 20, '2020-04-27 02:41:55', 0, '0000-00-00 00:00:00', 2),
+(26, 'test', 11, 'gg\'s', '     teet', 'uploads/MeatPoultryFish_ICHeader46984767.jpg', 20, '2020-04-27 02:49:48', 0, '0000-00-00 00:00:00', 1),
+(27, 'Why do we use it?', 11, 'dd\'s\'s', '     It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/MeatPoultryFish_ICHeader2220278.jpg', 20, '2020-04-27 02:50:36', 20, '2020-04-28 01:33:07', 1);
 
 -- --------------------------------------------------------
 
@@ -209,7 +213,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `status`
