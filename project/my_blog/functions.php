@@ -208,7 +208,7 @@ function save_category_info($name,$status){
      if($pegination){
          $sql = $sql." limit  $offset , $no_of_records_per_page";
      }
-    echo $sql;
+    //echo $sql;
     $result = mysqli_query($conn, $sql);
     return $result;
  }
